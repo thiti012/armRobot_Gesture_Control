@@ -38,7 +38,7 @@ claw_open_angle = 60
 claw_close_angle = 0
 ```
 
-接下來，啟動 debug 模式。
+
 ```python
 debug = True
 ```
