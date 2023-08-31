@@ -1,18 +1,6 @@
-# gesture_MeArm
-[English](README.md) | [繁體中文](README_zh.md)
 
 
 
-### [MediaPipe Hand tracking](https://google.github.io/mediapipe/solutions/hands)
-### [MeArm](https://www.instructables.com/Pocket-Sized-Robot-Arm-meArm-V04)
-
-![image](images/1.jpg)
-
-https://www.youtube.com/watch?v=TBRi6ecgQfc
-
-
-![Servo](images/3.jpg)
-![Circuit](images/2.jpg)
 
 
 ```c++
