@@ -10,6 +10,8 @@ int default_angle[4] = {75, 90, 90, 60};
 ```bash
 cd python
 pip install -r requirements.txt
+pip install mediapipe
+pip install serial
 ```
 
 
