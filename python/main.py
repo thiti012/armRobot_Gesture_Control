@@ -5,6 +5,7 @@ import time
 import tkinter as tk
 from tkinter import PhotoImage
 from tkinter import ttk
+import threading
 
 # config
 write_video = True
@@ -98,14 +99,14 @@ def switch_to_subpage1_popup():
     popup_label = tk.Label(frame_inside_canvas, text=popup_text, justify="left")
     popup_label.pack(padx=20, pady=20)
 
-    image_paths = ["gesture_MeArm-main/images/Forward.png",
-                    "gesture_MeArm-main/images/back.png", 
-                    "gesture_MeArm-main/images/top.png", 
-                    "gesture_MeArm-main/images/down.png", 
-                    "gesture_MeArm-main/images/left.png", 
-                    "gesture_MeArm-main/images/right.png", 
-                    "gesture_MeArm-main/images/gum.png", 
-                    "gesture_MeArm-main/images/bea.png"]
+    image_paths = ["images/Forward.png",
+                    "images/back.png", 
+                    "images/top.png", 
+                    "images/down.png", 
+                    "images/left.png", 
+                    "images/right.png", 
+                    "images/gum.png", 
+                    "images/bea.png"]
     images = [PhotoImage(file=path).subsample(2) for path in image_paths]
 
     text_content = [
@@ -154,75 +155,155 @@ def switch_to_mainpage():
     sub_frame.pack_forget()
     main_frame.pack()
 
+
+def send_arrayA_Once():
+    patterns = [
+        [75, 0, 165, 60],
+        [110, 20, 175, 60],
+        [110, 45, 130, 110],
+        [75, 45, 131, 110],
+        [43, 41, 171, 110],
+        [43, 41, 101, 60],
+    ]
+    print("Pattern set : A")
+    for pattern in patterns:
+        data_bytes = bytearray(pattern)
+        ser.write(data_bytes)
+        time.sleep(1)
+   
+    
+def send_arrayB_Once():
+    patterns_B = [
+        [75, 0, 165, 60],
+        [40, 25, 175, 60],
+        [35, 45, 130, 110],
+        [75, 45, 131, 110],
+        [110, 41, 171, 110],
+        [110, 51, 121, 60],
+    ]
+    print("Pattern set : B")
+    for pattern in patterns_B:
+        data_bytes = bytearray(pattern)
+        ser.write(data_bytes)
+        time.sleep(1)
+
+def send_arrayC_Once():
+    patterns_C = [
+        [10, 0, 160, 60],
+        [75, 15, 175, 60],
+        [75, 35, 150, 60],
+        [75, 115, 161, 110],
+        [75, 41, 171, 110],
+        [75, 31, 121, 60],
+    ]
+    print("Pattern set : C")
+    for pattern in patterns_C:
+        data_bytes = bytearray(pattern)
+        ser.write(data_bytes)
+        time.sleep(1)
+
+def send_arrayD_Once():
+    patterns_D = [
+        [75, 0, 145, 60],
+        [75, 100, 180, 110],
+        [120, 30, 130, 110],
+        [30, 30, 131, 110],
+        [75, 11, 171, 60],
+    ]
+    print("Pattern set : D")
+    for pattern in patterns_D:
+        data_bytes = bytearray(pattern)
+        ser.write(data_bytes)
+        time.sleep(1)
+
 def send_arrayA():
-    data = [102, 0, 165, 60,]  # ค่าอาเรย์ที่คุณต้องการส่ง
+    data = [75, 0, 165, 60,]  # ค่าอาเรย์ที่คุณต้องการส่ง
     data_bytes = bytearray(data)
-    data1 = [102, 50, 165, 60,]
+    data1 = [110, 20, 175, 60,]
     data1_bytes = bytearray(data1)
-    data2 = [35, 30, 130, 110,]
+    data2 = [110, 45, 130, 110,]
     data2_bytes = bytearray(data2)
-    data3 = [35, 30, 131, 110,]
+    data3 = [75, 45, 131, 110,]
     data3_bytes = bytearray(data3)
-    data4 = [35, 11, 171, 60,]
+    data4 = [43, 41, 171, 110,]
     data4_bytes = bytearray(data4)
+    data5 = [43, 41, 101, 60,]
+    data5_bytes = bytearray(data5)
+    
     print("Pattern set : A ")
-    ser.write(data_bytes)
-    time.sleep(1) 
-    ser.write(data1_bytes)
-    time.sleep(1)
-    ser.write(data2_bytes)
-    time.sleep(1) 
-    ser.write(data3_bytes)
-    time.sleep(1)
-    ser.write(data4_bytes)
-    time.sleep(1)
+    while sending_A:
+        ser.write(data_bytes)
+        time.sleep(1)
+        ser.write(data1_bytes)
+        time.sleep(1)
+        ser.write(data2_bytes)
+        time.sleep(1)
+        ser.write(data3_bytes)
+        time.sleep(1)
+        ser.write(data4_bytes)
+        time.sleep(1)
+        ser.write(data5_bytes)
+        time.sleep(1)
+
 
 def send_arrayB():
-    data = [35, 0, 165, 60,]  # ค่าอาเรย์ที่คุณต้องการส่ง
+    data = [75, 0, 165, 60,]  # ค่าอาเรย์ที่คุณต้องการส่ง
     data_bytes = bytearray(data)
-    data1 = [35, 50, 165, 60,]
+    data1 = [40, 25, 175, 60,]
     data1_bytes = bytearray(data1)
-    data2 = [35, 30, 130, 110,]
+    data2 = [35, 45, 130, 110,]
     data2_bytes = bytearray(data2)
-    data3 = [102, 30, 131, 110,]
+    data3 = [75, 45, 131, 110,]
     data3_bytes = bytearray(data3)
-    data4 = [102, 11, 171, 60,]
+    data4 = [110, 41, 171, 110,]
     data4_bytes = bytearray(data4)
+    data5 = [110, 51, 121, 60,]
+    data5_bytes = bytearray(data5)
+
     print("Pattern set : B ")
-    ser.write(data_bytes)
-    time.sleep(1) 
-    ser.write(data1_bytes)
-    time.sleep(1)
-    ser.write(data2_bytes)
-    time.sleep(1) 
-    ser.write(data3_bytes)
-    time.sleep(1)
-    ser.write(data4_bytes)
-    time.sleep(1)
+    while sending_B:
+        ser.write(data_bytes)
+        time.sleep(1) 
+        ser.write(data1_bytes)
+        time.sleep(1)
+        ser.write(data2_bytes)
+        time.sleep(1) 
+        ser.write(data3_bytes)
+        time.sleep(1)
+        ser.write(data4_bytes)
+        time.sleep(1)
+        ser.write(data5_bytes)
+        time.sleep(1)
 
 
 def send_arrayC():
-    data = [75, 0, 145, 60,]  # ค่าอาเรย์ที่คุณต้องการส่ง
+    data = [10, 0, 160, 60,]  # ค่าอาเรย์ที่คุณต้องการส่ง
     data_bytes = bytearray(data)
-    data1 = [75, 70, 180, 110,]
+    data1 = [75, 15, 175, 60,]
     data1_bytes = bytearray(data1)
-    data2 = [75, 30, 130, 110,]
+    data2 = [75, 35, 150, 60,]
     data2_bytes = bytearray(data2)
-    data3 = [75, 30, 131, 110,]
+    data3 = [75, 115, 161, 110,]
     data3_bytes = bytearray(data3)
-    data4 = [75, 11, 171, 60,]
+    data4 = [75, 41, 171, 110,]
     data4_bytes = bytearray(data4)
+    data5 = [75, 31, 121, 60,]
+    data5_bytes = bytearray(data5)
+
     print("Pattern set : C ")
-    ser.write(data_bytes)
-    time.sleep(1) 
-    ser.write(data1_bytes)
-    time.sleep(1)
-    ser.write(data2_bytes)
-    time.sleep(1) 
-    ser.write(data3_bytes)
-    time.sleep(1)
-    ser.write(data4_bytes)
-    time.sleep(1)
+    while sending_C:
+        ser.write(data_bytes)
+        time.sleep(1) 
+        ser.write(data1_bytes)
+        time.sleep(1)
+        ser.write(data2_bytes)
+        time.sleep(1) 
+        ser.write(data3_bytes)
+        time.sleep(1)
+        ser.write(data4_bytes)
+        time.sleep(1)
+        ser.write(data5_bytes)
+        time.sleep(1)
 
 def send_arrayD():
     data = [75, 0, 145, 60,]  # ค่าอาเรย์ที่คุณต้องการส่ง
@@ -235,17 +316,88 @@ def send_arrayD():
     data3_bytes = bytearray(data3)
     data4 = [75, 11, 171, 60,]
     data4_bytes = bytearray(data4)
+
     print("Pattern set : D ")
-    ser.write(data_bytes)
-    time.sleep(1) 
-    ser.write(data1_bytes)
-    time.sleep(1)
-    ser.write(data2_bytes)
-    time.sleep(1) 
-    ser.write(data3_bytes)
-    time.sleep(1)
-    ser.write(data4_bytes)
-    time.sleep(1)
+    while sending_D:
+        ser.write(data_bytes)
+        time.sleep(1) 
+        ser.write(data1_bytes)
+        time.sleep(1)
+        ser.write(data2_bytes)
+        time.sleep(1) 
+        ser.write(data3_bytes)
+        time.sleep(1)
+        ser.write(data4_bytes)
+        time.sleep(1)
+
+def toggle_send_A():
+    global sending_A, sending_B, sending_C, sending_D,sending_A_thread
+    if sending_B or sending_C or sending_D:
+        return  # ถ้า B, C, หรือ D กำลังทำงานอยู่ให้ไม่ทำงาน A
+    if sending_A:
+        sending_A = False
+        send_button_A.config(text="Start Loop A")
+    else:
+        sending_A = True
+        send_button_A.config(text="Stop Loop A")
+        if not sending_A_thread.is_alive():
+            sending_A_thread = threading.Thread(target=send_arrayA)
+            sending_A_thread.start()
+
+def toggle_send_B():
+    global sending_A, sending_B, sending_C, sending_D,sending_B_thread
+    if sending_A or sending_C or sending_D:
+        return  # ถ้า A, C, หรือ D กำลังทำงานอยู่ให้ไม่ทำงาน B
+    if sending_B:
+        sending_B = False
+        send_button_B.config(text="Start Loop B")
+    else:
+        sending_B = True
+        send_button_B.config(text="Stop Loop B")
+        if not sending_B_thread.is_alive():
+            sending_B_thread = threading.Thread(target=send_arrayB)
+            sending_B_thread.start()
+
+def toggle_send_C():
+    global sending_A, sending_B, sending_C, sending_D,sending_C_thread
+    if sending_A or sending_B or sending_D:
+        return  # ถ้า A, B, หรือ D กำลังทำงานอยู่ให้ไม่ทำงาน C
+    if sending_C:
+        sending_C = False
+        send_button_C.config(text="Start Loop C")
+    else:
+        sending_C = True
+        send_button_C.config(text="Stop Loop C")
+        if not sending_C_thread.is_alive():
+            sending_C_thread = threading.Thread(target=send_arrayC)
+            sending_C_thread.start()
+
+def toggle_send_D():
+    global sending_A, sending_B, sending_C, sending_D,sending_D_thread
+    if sending_A or sending_B or sending_C:
+        return  # ถ้า A, C, หรือ B กำลังทำงานอยู่ให้ไม่ทำงาน D
+    if sending_D:
+        sending_D = False
+        send_button_D.config(text="Start Loop D")
+    else:
+        sending_D = True
+        send_button_D.config(text="Stop Loop D")
+        if not sending_D_thread.is_alive():
+            sending_D_thread = threading.Thread(target=send_arrayD)
+            sending_D_thread.start()
+
+sending_A = False
+sending_B = False
+sending_C = False
+sending_D = False
+
+sending_A_thread = threading.Thread(target=send_arrayA)
+sending_B_thread = threading.Thread(target=send_arrayB)
+sending_C_thread = threading.Thread(target=send_arrayC)
+sending_D_thread = threading.Thread(target=send_arrayD)
+
+
+
 
 
 # สร้างหน้าต่างหลัก
@@ -254,16 +406,16 @@ root = tk.Tk()
 
 root.title("Arm Robot Control")
 
-root.iconphoto(False, tk.PhotoImage(file="gesture_MeArm-main/images/robotic-arm.png"))
+root.iconphoto(False, tk.PhotoImage(file="images/robotic-arm.png"))
 # กำหนดขนาดของหน้าต่าง
-root.geometry("400x300")
+root.geometry("400x450")
 
 # สร้างเฟรมหลัก
 main_frame = tk.Frame(root)
 main_frame.pack(expand=True)
 
 # เพิ่มตัวอักษร "PROJECT TTW" ตรงกลางหน้าต่าง
-label = tk.Label(main_frame, text="Select Funchion", font=("Arial", 20))
+label = tk.Label(main_frame, text="Select Function", font=("Arial", 20))
 label.pack(side=tk.TOP)
 
 # ปรับปรุงปุ่มให้อยู่แนวนอน
@@ -277,7 +429,7 @@ button_frame.pack(pady=20)
 
 # Create a StringVar to store the selected COM port
 selected_com_port = tk.StringVar()
-selected_com_port.set("Select COM port")  # Set the default value
+selected_com_port.set("Select COM Port")  # Set the default value
 
 # Create a OptionMenu (dropdown) to select the COM port
 com_port_options = ["COM1", "COM2", "COM3", "COM4", "COM5","COM6", "COM7", "COM8", "COM9", "COM10", "COM11","COM12", "COM13", "COM14", "COM15", "COM16", "COM17", "COM18", "COM19", "COM20"]  # Add your COM port options here
@@ -298,7 +450,7 @@ btn_autopose = tk.Button(button_frame, text="Pattern set Control", command=switc
 btn_autopose.pack(side="left", padx=10)
 
 # สร้างปุ่ม "Exit" ที่เมื่อกดจะปิดโปรแกรม
-btn_exit = tk.Button(button_frame, text="Gesture control ", command=root.quit)
+btn_exit = tk.Button(button_frame, text="Gesture Control ", command=root.quit)
 btn_exit.pack(side="left", padx=10)
 
 #btn_switch_page = tk.Button(main_frame, text="Mannual", command=switch_to_subpage1)
@@ -313,17 +465,46 @@ sub_frame = tk.Frame(root)
 
 
 # สร้างปุ่ม A, B, C, D ในหน้ารอง
-btn_a = tk.Button(sub_frame, text="A", command=send_arrayA)
+btn_a = tk.Button(sub_frame, text="A", command=send_arrayA_Once)
 btn_a.pack(pady=10)
 
-btn_b = tk.Button(sub_frame, text="B", command=send_arrayB)
-btn_b.pack(pady=10)
+# สร้างปุ่มสำหรับเริ่มและหยุดการส่งข้อมูล Pattern A
+send_button_A = tk.Button(sub_frame, text="Start Loop A", command=toggle_send_A)
+send_button_A.pack()
 
-btn_a = tk.Button(sub_frame, text="C", command=send_arrayC)
+
+label_a = tk.Label(sub_frame, text="A   หุ่นยนต์แขนกลจะคีบวัตถุจากทางด้านซ้ายสุดไปวางไว้ทางด้านขวาสุด")
+label_a.pack() 
+
+
+btn_b = tk.Button(sub_frame, text="B", command=send_arrayB_Once)
+btn_b.pack(pady=10)
+# สร้างปุ่มสำหรับเริ่มและหยุดการส่งข้อมูล Pattern B
+send_button_B = tk.Button(sub_frame, text="Start Loop B", command=toggle_send_B)
+send_button_B.pack()
+
+label_a = tk.Label(sub_frame, text="B   หุ่นยนต์แขนกลจะคีบวัตถุจากทางด้านขวาสุดไปวางไว้ทางด้านซ้ายสุด")
+label_a.pack()
+
+
+btn_a = tk.Button(sub_frame, text="C", command=send_arrayC_Once)
 btn_a.pack(pady=10)
+# สร้างปุ่มสำหรับเริ่มและหยุดการส่งข้อมูล Pattern C
+send_button_C = tk.Button(sub_frame, text="Start Loop C", command=toggle_send_C)
+send_button_C.pack()
 
-btn_b = tk.Button(sub_frame, text="D", command=send_arrayD)
+label_a = tk.Label(sub_frame, text="C   หุ่นยนต์แขนกลจะคีบวัตถุขึ้นและวางลงตรงจุดเดิม")
+label_a.pack()
+
+
+btn_b = tk.Button(sub_frame, text="D", command=send_arrayD_Once)
 btn_b.pack(pady=10)
+# สร้างปุ่มสำหรับเริ่มและหยุดการส่งข้อมูล Pattern D
+send_button_D = tk.Button(sub_frame, text="Start Loop D", command=toggle_send_D)
+send_button_D.pack()
+
+label_a = tk.Label(sub_frame, text="D   หุ่นยนต์แขนกลจะขยับขึ้นลง ซ้ายขวา คีบปล่อย")
+label_a.pack()
 
 
 
@@ -355,14 +536,14 @@ palm_angle_mid = 20
 
 y_min = 0
 y_mid = 90
-y_max = 180
+y_max = 170
 # use wrist y to control y axis
 wrist_y_min = 0.3    #0.3
 wrist_y_max = 0.9     #0.9
 
 z_min = 40 #10
 z_mid = 90
-z_max = 180
+z_max = 170
 # use palm size to control z axis
 plam_size_min = 0.1   #0.1
 plam_size_max = 0.3   #0.3
