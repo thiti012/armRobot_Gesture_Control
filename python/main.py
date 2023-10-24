@@ -1,11 +1,13 @@
 import serial
 import cv2
 import mediapipe as mp
+from tkinter import filedialog
 import time
 import tkinter as tk
 from tkinter import PhotoImage
 from tkinter import ttk
 import threading
+import pandas as pd
 
 # config
 write_video = True
@@ -330,6 +332,32 @@ def send_arrayD():
         ser.write(data4_bytes)
         time.sleep(1)
 
+def send_arrayX_Once(data):
+    print("Pattern set : X")
+    for pattern in data:
+        data_bytes = bytearray(pattern)
+        # Replace the following line with your actual serial port write logic
+        ser.write(data_bytes)
+        time.sleep(1)
+
+# Load data from Excel file using Pandas
+#excel_file_path = 'gesture_MeArm-main\Book1.xls.xlsx'  # Replace with your Excel file path
+#df = pd.read_excel(excel_file_path)
+
+# Extract the data from the DataFrame
+#patterns = df.values.tolist()
+
+# Call the send_arrayA_Once function with the data from the Excel file
+#send_arrayX_Once(patterns)
+
+def load_and_send_data():
+    excel_file_path = filedialog.askopenfilename(filetypes=[("Excel Files", "*.xlsx")])
+    if excel_file_path:
+        df = pd.read_excel(excel_file_path)
+        patterns = df.values.tolist()
+        send_arrayX_Once(patterns)
+
+
 def toggle_send_A():
     global sending_A, sending_B, sending_C, sending_D,sending_A_thread
     if sending_B or sending_C or sending_D:
@@ -505,6 +533,10 @@ send_button_D.pack()
 
 label_a = tk.Label(sub_frame, text="D   หุ่นยนต์แขนกลจะขยับขึ้นลง ซ้ายขวา คีบปล่อย")
 label_a.pack()
+
+
+btn_b = tk.Button(sub_frame, text="Import Excel Control Set", command=load_and_send_data)
+btn_b.pack(pady=10)
 
 
 

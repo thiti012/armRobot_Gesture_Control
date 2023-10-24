@@ -12,6 +12,9 @@ cd python
 pip install -r requirements.txt
 pip install mediapipe
 pip install serial
+pip install pandas
+pip install openpyxl
+```
 ```
 
 
